@@ -121,7 +121,6 @@ def extract(i):
         end.append(r)
 
     # print len(end)
-    # print end
     end = np.array(end)
 
 
