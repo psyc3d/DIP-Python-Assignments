@@ -1,0 +1,37 @@
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt 
+
+img = cv2.imread("./Assignment 3/lena.png")
+img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+img = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+
+# scaling to 0.5 by taking 4 pixels as 1
+
+out1 = np.ones(shape=(512,1024))
+out2 = np.ones(shape=(1024,1024))
+k = 0
+for i in range(0,511,1):
+    k = 0
+    for j in range(0,510,2):
+        out1[i][k] = img[i][j]
+        out1[i][k+1] = img[i][j]/20 + img[i][j+1]
+        out1[i][k+2] = img[i][j] + img[i][j+1]/20
+        out1[i][k+3] = img[i][j+1]
+        k += 4
+k = 0
+for j in range(0,1023,1):
+    k = 0
+    for i in range(0,510,2):
+        out2[k][j] = out1[i][j]
+        out2[k+1][j] = out1[i][j] + out1[i+1][j]/20
+        out2[k+2][j] = out1[i][j]/20 + out1[i+1][j]
+        out2[k+3][j] = out1[i+1][j]
+        k += 4
+
+img = cv2.resize(img,None,fx = 2,fy = 2 ,interpolation=cv2.INTER_AREA)
+plt.subplot(2,1,1)
+plt.imshow(img,cmap='gray')
+plt.subplot(2,1,2)
+plt.imshow(out2,cmap='gray')
+plt.show()
