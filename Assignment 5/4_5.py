@@ -120,7 +120,6 @@ def extract(i):
         r = FFT(x)
         end.append(r)
 
-    # print len(end)
     end = np.array(end)
 
 
